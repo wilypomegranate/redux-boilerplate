@@ -48,17 +48,17 @@ module.exports = function (plop) {
 
         actions.push({
           type: 'append',
-          path: 'reducers.js',
+          path: 'src/reducers.js',
           pattern: '// Import reducers here.',
-          template: "import {{name}} from './src/containers/{{name}}/reducers.js'"
+          template: "import {{name}}Reducer from './containers/{{name}}/reducers.js'"
         })
 
         actions.push({
           type: 'append',
-          path: 'reducers.js',
+          path: 'src/reducers.js',
           pattern: /export default combineReducers\(\[/,
           separator: '\n',
-          template: '{{name}},'
+          template: '{{name}}Reducer,'
         })
       }
 
@@ -71,16 +71,16 @@ module.exports = function (plop) {
 
         actions.push({
           type: 'append',
-          path: 'epics.js',
+          path: 'src/epics.js',
           pattern: '// Import epics here.',
-          template: "import epic from './src/containers/{{name}}/epic'"
+          template: "import {{name}}Epic from './containers/{{name}}/epic'"
         })
 
         actions.push({
           type: 'append',
-          path: 'epics.js',
+          path: 'src/epics.js',
           pattern: /export default combineEpics\(/,
-          template: '{{name}},'
+          template: '{{name}}Epic,'
         })
       }
 
