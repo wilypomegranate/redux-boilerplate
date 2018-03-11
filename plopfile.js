@@ -65,15 +65,22 @@ module.exports = function (plop) {
       if (data.reduxObservable) {
         actions.push({
           type: 'add',
-          path: 'src/containers/{{name}}/redux-observable.js',
-          templateFile: 'plop_templates/containers/redux-observable.hbs'
+          path: 'src/containers/{{name}}/epic.js',
+          templateFile: 'plop_templates/containers/epic.hbs'
         })
 
         actions.push({
           type: 'append',
-          path: 'src/containers/{{name}}/index.js',
-          pattern: '// Imports of optional dependent components here.',
-          template: "import redux-observable from './src/containers/{{name}}/redux-observable'"
+          path: 'epics.js',
+          pattern: '// Import epics here.',
+          template: "import epic from './src/containers/{{name}}/epic'"
+        })
+
+        actions.push({
+          type: 'append',
+          path: 'epics.js',
+          pattern: /export default combineEpics\(/,
+          template: '{{name}},'
         })
       }
 

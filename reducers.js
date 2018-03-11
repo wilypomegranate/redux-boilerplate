@@ -6,7 +6,14 @@ import Home from './src/containers/Home/reducers.js'
 
 
 
+
+
+
 export default combineReducers([
 Home,
+
+
+
+
 
 ])
