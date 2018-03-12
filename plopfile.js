@@ -43,6 +43,13 @@ module.exports = function (plop) {
           type: 'append',
           path: 'src/containers/{{name}}/index.js',
           pattern: '// Imports of optional dependent components here.',
+          template: "import epics from './epics'"
+        })
+
+        actions.push({
+          type: 'append',
+          path: 'src/containers/{{name}}/index.js',
+          pattern: '// Imports of optional dependent components here.',
           template: "import reducers from './reducers'"
         })
 
@@ -60,20 +67,27 @@ module.exports = function (plop) {
           separator: '\n',
           template: '{{name}}Reducer,'
         })
+
+        actions.push({
+          type: 'append',
+          path: 'src/containers/{{name}}/index.js',
+          pattern: /compose\(/,
+          template: 'reducers, epics,'
+        })
       }
 
       if (data.reduxObservable) {
         actions.push({
           type: 'add',
-          path: 'src/containers/{{name}}/epic.js',
-          templateFile: 'plop_templates/containers/epic.hbs'
+          path: 'src/containers/{{name}}/epics.js',
+          templateFile: 'plop_templates/containers/epics.hbs'
         })
 
         actions.push({
           type: 'append',
           path: 'src/epics.js',
           pattern: '// Import epics here.',
-          template: "import {{name}}Epic from './containers/{{name}}/epic'"
+          template: "import {{name}}Epic from './containers/{{name}}/epics'"
         })
 
         actions.push({
@@ -86,5 +100,29 @@ module.exports = function (plop) {
 
       return actions
     }
-  });
+  })
+
+  plop.setGenerator('route', {
+    description: 'This is a plop for a route.',
+    prompts: [{
+        type: 'input',
+        name: 'path',
+        message: 'Route url'
+    }, {
+      type: 'input',
+      name: 'container',
+      message: 'Container to route to.'
+    }],
+    actions: [{
+      type: 'append',
+      path: 'src/containers/App/routes.js',
+      pattern: '<Router>',
+      template: '    <Route path="{{path}}" component={ {{~container~}} } />'
+    }, {
+      type: 'append',
+      path: 'src/containers/App/routes.js',
+      pattern: '// Import containers here.',
+      template: "import {{container}} from '../{{container}}/index'"
+    }]
+  })
 };

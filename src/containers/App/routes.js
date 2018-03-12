@@ -4,10 +4,12 @@ import {
   Route
 } from 'react-router-dom'
 
+// Import containers here.
+import Home from '../Home/index'
 
 const Routes = () => (
   <Router>
-    {/* <Route exact path="/" component={Home} /> */}
+    <Route path="/" component={Home} />
   </Router>
 )
 
